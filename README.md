@@ -1,10 +1,10 @@
 # Cork Boolean Library
 
-A robust C++ library for performing Boolean operations on triangle meshes.
+A C++ library for performing Boolean operations on triangle meshes.
 
 ## Overview
 
-Cork provides exact boolean operations (union, difference, intersection, XOR) between watertight triangle meshes. It uses GMP-based exact arithmetic internally to handle numerical precision robustly.
+Cork computes boolean operations (union, difference, intersection, XOR) between watertight triangle meshes using GMP-based exact arithmetic.
 
 ## Requirements
 
@@ -38,7 +38,7 @@ ctest --output-on-failure
 ./cork_cli -isct inputA.off inputB.off output.off
 ./cork_cli -xor inputA.off inputB.off output.off
 
-# Mesh validation
+# Validate mesh
 ./cork_cli -solid mesh.off
 
 # Resolve intersections
@@ -50,12 +50,10 @@ ctest --output-on-failure
 ```cpp
 #include "cork.h"
 
-// Perform union
 CorkTriMesh result;
 computeUnion(meshA, meshB, &result);
 freeCorkTriMesh(&result);
 
-// Check mesh validity
 bool solid = isSolid(mesh);
 ```
 
