@@ -1,40 +1,39 @@
 # Cork Boolean Library
 
-A high-performance C++ library for performing Boolean operations on triangle meshes, originally developed at Google and now maintained as an open-source project.
+A high-performance C++ library for performing Boolean operations on triangle meshes, maintained as an open-source project.
 
 ## What is Cork?
 
-Cork is a robust boolean mesh library designed to compute accurate boolean operations (union, difference, intersection, XOR) between triangle meshes. It was originally developed by Gilbert Bernstein at Google for internal geometric modeling needs.
+Cork is a robust boolean mesh library designed to compute accurate boolean operations (union, difference, intersection, XOR) between triangle meshes. Originally developed by Gilbert Bernstein for geometric modeling applications.
 
 ## Why Cork When CGAL and libigl Exist?
 
 While CGAL and libigl are excellent libraries, Cork offers distinct advantages:
 
-1. **Simplicity**: Cork has a minimal, focused API. No complex configuration or geometric kernel setup required—just include `cork.h` and go.
+1. **Simplicity**: Minimal, focused API. No complex geometric kernel setup—just include `cork.h` and go.
 
-2. **Standalone**: No external geometric kernel dependencies. Works with raw triangle arrays in a straightforward data structure.
+2. **Standalone**: No external geometric kernel dependencies. Works with raw triangle arrays.
 
-3. **Self-Contained**: Unlike CGAL which requires extensive setup and configuration for robust arithmetic, Cork handles numerical precision internally using its own exact arithmetic based on GMP.
+3. **Exact Arithmetic**: Handles numerical precision internally using GMP-based exact arithmetic.
 
-4. **Lightweight**: A single static library link. No template-heavy compile times or large dependency chains.
+4. **Lightweight**: Single static library link. No template-heavy compile times.
 
-5. **CLI Tools**: Comes with ready-to-use command-line tools for batch processing mesh files.
+5. **CLI Tools**: Ready-to-use command-line tools for batch processing.
 
-However, for complex geometric queries beyond boolean operations, CGAL and libigl remain excellent choices with broader functionality.
+For complex geometric queries beyond boolean operations, CGAL and libigl remain excellent choices.
 
 ## Features
 
 - **Boolean Operations**: Union, Difference, Intersection, XOR
 - **Mesh Validation**: Check if meshes are solid/watertight
 - **Intersection Resolution**: Make mesh intersections explicit and connected
-- **Exact Arithmetic**: Robust handling of numerical precision
 - **Cross-Platform**: macOS, Linux, Windows support
 
 ## Building
 
 Requirements:
 - CMake 3.10+
-- C++20 compatible compiler (Clang recommended)
+- C++20 compatible compiler
 - GMP (GNU Multi-Precision library)
 
 ```bash
@@ -58,13 +57,7 @@ ctest --output-on-failure
 # Union of two meshes
 ./cork_cli -union inputA.off inputB.off output.off
 
-# Difference
-./cork_cli -diff inputA.off inputB.off output.off
-
-# Intersection
-./cork_cli -isct inputA.off inputB.off output.off
-
-# Check if mesh is solid/watertight
+# Check if solid
 ./cork_cli -solid mesh.off
 ```
 
@@ -73,24 +66,8 @@ ctest --output-on-failure
 ```cpp
 #include "cork.h"
 
-// Create input mesh
-CorkTriMesh mesh;
-mesh.n_vertices = 4;
-mesh.n_triangles = 4;
-mesh.vertices = new float[12]{/* vertex positions */};
-mesh.triangles = new uint[12]{/* triangle indices */};
-
-// Check if solid
-bool solid = isSolid(mesh);
-
-// Boolean operations
 CorkTriMesh result;
 computeUnion(meshA, meshB, &result);
-computeDifference(meshA, meshB, &result);
-computeIntersection(meshA, meshB, &result);
-computeSymmetricDifference(meshA, meshB, &result);
-
-// Cleanup
 freeCorkTriMesh(&result);
 ```
 
@@ -101,9 +78,8 @@ freeCorkTriMesh(&result);
 
 ## License
 
-This project is a port of the original Google Cork Library. See the COPYRIGHT file for licensing details. Licensed under LGPL with exception for template code.
+See COPYRIGHT file. Licensed under LGPL.
 
-## acknowledgments
+## Author
 
-- Original author: Gilbert Bernstein
-- Previously at Google Research
+Gilbert Bernstein
