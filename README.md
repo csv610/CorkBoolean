@@ -1,40 +1,18 @@
 # Cork Boolean Library
 
-A high-performance C++ library for performing Boolean operations on triangle meshes, maintained as an open-source project.
+A robust C++ library for performing Boolean operations on triangle meshes.
 
-## What is Cork?
+## Overview
 
-Cork is a robust boolean mesh library designed to compute accurate boolean operations (union, difference, intersection, XOR) between triangle meshes. Originally developed by Gilbert Bernstein for geometric modeling applications.
+Cork provides exact boolean operations (union, difference, intersection, XOR) between watertight triangle meshes. It uses GMP-based exact arithmetic internally to handle numerical precision robustly.
 
-## Why Cork When CGAL and libigl Exist?
+## Requirements
 
-While CGAL and libigl are excellent libraries, Cork offers distinct advantages:
-
-1. **Simplicity**: Minimal, focused API. No complex geometric kernel setup—just include `cork.h` and go.
-
-2. **Standalone**: No external geometric kernel dependencies. Works with raw triangle arrays.
-
-3. **Exact Arithmetic**: Handles numerical precision internally using GMP-based exact arithmetic.
-
-4. **Lightweight**: Single static library link. No template-heavy compile times.
-
-5. **CLI Tools**: Ready-to-use command-line tools for batch processing.
-
-For complex geometric queries beyond boolean operations, CGAL and libigl remain excellent choices.
-
-## Features
-
-- **Boolean Operations**: Union, Difference, Intersection, XOR
-- **Mesh Validation**: Check if meshes are solid/watertight
-- **Intersection Resolution**: Make mesh intersections explicit and connected
-- **Cross-Platform**: macOS, Linux, Windows support
+- CMake 3.10+
+- C++20 compatible compiler (Clang, GCC)
+- GMP 5.0+
 
 ## Building
-
-Requirements:
-- CMake 3.10+
-- C++20 compatible compiler
-- GMP (GNU Multi-Precision library)
 
 ```bash
 mkdir build
@@ -42,23 +20,29 @@ cmake -S . -B build
 cmake --build build
 ```
 
-## Running Tests
+## Testing
 
 ```bash
 cd build
 ctest --output-on-failure
 ```
 
-## Quick Start
+## Usage
 
 ### Command Line
 
 ```bash
-# Union of two meshes
+# Boolean operations
 ./cork_cli -union inputA.off inputB.off output.off
+./cork_cli -diff inputA.off inputB.off output.off
+./cork_cli -isct inputA.off inputB.off output.off
+./cork_cli -xor inputA.off inputB.off output.off
 
-# Check if solid
+# Mesh validation
 ./cork_cli -solid mesh.off
+
+# Resolve intersections
+./cork_cli -resolve inputA.off inputB.off output.off
 ```
 
 ### C++ API
@@ -66,9 +50,13 @@ ctest --output-on-failure
 ```cpp
 #include "cork.h"
 
+// Perform union
 CorkTriMesh result;
 computeUnion(meshA, meshB, &result);
 freeCorkTriMesh(&result);
+
+// Check mesh validity
+bool solid = isSolid(mesh);
 ```
 
 ## Supported Formats
@@ -79,7 +67,3 @@ freeCorkTriMesh(&result);
 ## License
 
 See COPYRIGHT file. Licensed under LGPL.
-
-## Author
-
-Gilbert Bernstein
