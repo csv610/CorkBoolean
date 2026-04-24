@@ -6,6 +6,17 @@ A C++ library for performing Boolean operations on triangle meshes.
 
 Cork computes boolean operations (union, difference, intersection, XOR) between watertight triangle meshes using GMP-based exact arithmetic.
 
+## When to Use Cork
+
+Cork is designed for applications where simplicity and minimal dependencies are priorities:
+
+- **Minimal API**: Single header include. No geometric kernel setup required.
+- **Standalone**: No heavyweight template libraries. Works with raw triangle vertex/index arrays.
+- **Lightweight Link**: Static library only. No dependency chains.
+- **CLI Ready**: Built-in command-line tools for batch processing mesh files.
+
+For large-scale industrial applications or complex geometric queries, CGAL and libigl offer more comprehensive feature sets.
+
 ## Requirements
 
 - CMake 3.10+
